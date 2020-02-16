@@ -9,14 +9,19 @@ namespace FamilyTreeCreator_v2
         private const string _arrow = "--> ";
         private readonly string[] _menu =
             {
-                "  Add a man",
-                "  Add a woman",
+                "  Add a man (new generation)",
+                "  Add a woman (new generation)",
+                "  Add a wife",
+                "  Add a husband",
+                "  Biography",
                 "  Exit."
             };
 
-        private void MoveArrow(int moveChoice, FamilyTree fam, List<Person> famList)
+        private void MoveArrow(int moveChoice, List<Person> famList)
         {
             Console.Clear();
+
+            FamilyTree fam = new FamilyTree();
 
             fam.PrintFamilyTree(famList);
 
@@ -25,20 +30,20 @@ namespace FamilyTreeCreator_v2
                 if (i == moveChoice)
                 {
                     Console.Write(_arrow);
-                }                 
+                }
 
                 Console.WriteLine(_menu[i]);
             }
         }
 
-        public int ShowMenu(FamilyTree famtree, List<Person> famlist)
+        public int ShowMenu(List<Person> famlist)
         {
             int choice = 0;
             Console.CursorVisible = false;
 
             while (true)
             {
-                MoveArrow(choice, famtree, famlist);
+                MoveArrow(choice, famlist);
 
                 switch (Console.ReadKey().Key)
                 {

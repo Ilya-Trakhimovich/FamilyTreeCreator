@@ -8,6 +8,9 @@ namespace FamilyTreeCreator_v2
     {
         AddMan,
         AddWoman,
+        AddWife,
+        AddHusband,
+        Biography,
         Exit
     }
 }

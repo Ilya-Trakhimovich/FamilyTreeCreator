@@ -6,13 +6,15 @@ namespace FamilyTreeCreator_v2
 {
     class Woman : Person
     {
-        public Woman(string name, int age) : base(name, age) { }
+        public bool isMarried = false;
 
         public Man Husband { get; set; }
 
+        public Woman(string name, int age) : base(name, age) { }
+
         public void GetWork()
         {
-            Console.WriteLine("Doctor");
+            Console.WriteLine("Work: Doctor");
         }
     }
 }
