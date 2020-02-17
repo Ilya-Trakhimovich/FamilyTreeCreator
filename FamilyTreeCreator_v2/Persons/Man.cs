@@ -6,15 +6,28 @@ namespace FamilyTreeCreator_v2
 {
     class Man : Person
     {
-        public bool isMarried = false;
+        public bool IsMarried { get; set; } = false;
 
         public Woman Wife { get; set; }
 
         public Man(string name, int age) : base(name, age) { }
 
-        public void GetWork()
+        public string job = GetWork();
+
+        private static string GetWork()
         {
-            Console.WriteLine("Work: Engineer");
+            string[] jobs = { "Engineer", "Doctor", "Builder", "Driver", "DJ", "Trainer", "Seller", "Architect" };
+
+            Random rnd = new Random();
+
+            int job = rnd.Next(0, 8);
+
+            return jobs[job];
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

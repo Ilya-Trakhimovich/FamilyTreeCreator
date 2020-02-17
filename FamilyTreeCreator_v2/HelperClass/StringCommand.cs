@@ -66,7 +66,7 @@ namespace FamilyTreeCreator_v2
 
                 bool isNumber = int.TryParse(Console.ReadLine(), out id);
 
-                if (isNumber && (id > 0 && id < personList.Count+1))
+                if (isNumber && (id > 0 && id < personList.Count + 1))
                 {
                     foreach (var per in personList)
                     {
@@ -74,26 +74,62 @@ namespace FamilyTreeCreator_v2
                         {
                             person = per;
                             flag = false;
+
                             break;
                         }
                     }
                 }
                 else
                 {
-                    PrintColorMessage("Uncorrect ID.\n");                
+                    PrintColorMessage("Uncorrect ID.\n");
                 }
             }
 
-            return person; 
+            return person;
         }
 
-        public static void PrintColorMessage(string message)
+        public static bool ChecSpouse(List<Person> personList, Person per)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(message);
-            Console.ResetColor();
+            bool isSpouse = false;
+
+            if (personList != null && per != null)
+            {
+                foreach (var person in personList)
+                {
+                    if (person is Man man)
+                    {
+                        if (man.Wife == per)
+                        {
+                            isSpouse = true;
+
+                            break;
+                        }
+                    }
+                    else if (person is Woman woman)
+                    {
+                        if (woman.Husband == per)
+                        {
+                            isSpouse = true;
+
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                PrintColorMessage("Empty!\n");
+            }
+
+            return isSpouse;
         }
-    
+
+            public static void PrintColorMessage(string message)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(message);
+                Console.ResetColor();
+            }
+        }
     }
-}
 

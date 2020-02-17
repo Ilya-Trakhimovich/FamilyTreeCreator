@@ -51,7 +51,7 @@ namespace FamilyTreeCreator_v2
             return lastPerson;
         }
 
-        public Person AddWife(List<Person> personList) // TODO: bug: method allows add new wife to new husband
+        public Person AddWife(List<Person> personList)
         {
             if (personList.Count > 0)
             {
@@ -61,20 +61,19 @@ namespace FamilyTreeCreator_v2
 
                 while (flag)
                 {
-                    if (!(man == null))
+                    if (!(man == null) && !StringCommand.ChecSpouse(personList, man))
                     {
                         string name = StringCommand.SetPersonName();
                         int age = StringCommand.SetPersonAge();
                         man.Wife = new Woman(name, age)
                         {
-                            isMarried = true
+                            Child = man.Child
                         };
                         flag = false;
                     }
                     else
                     {
                         StringCommand.PrintColorMessage("Error!\n");
-
                         Console.ReadKey();
 
                         return null;
@@ -91,7 +90,7 @@ namespace FamilyTreeCreator_v2
             }
         }
 
-        public Person AddHusband(List<Person> personList) // TODO: bug: method allows add new husband to new wife
+        public Person AddHusband(List<Person> personList)
         {
             if (personList.Count > 0)
             {
@@ -101,13 +100,13 @@ namespace FamilyTreeCreator_v2
 
                 while (flag)
                 {
-                    if (!(woman == null))
+                    if (!(woman == null) && !StringCommand.ChecSpouse(personList, woman))
                     {
                         string name = StringCommand.SetPersonName();
                         int age = StringCommand.SetPersonAge();
                         woman.Husband = new Man(name, age)
                         {
-                            isMarried = true
+                            Child = woman.Child
                         };
                         flag = false;
                     }
@@ -142,8 +141,9 @@ namespace FamilyTreeCreator_v2
                         $"Name: {man.Name}\n" +
                         $"Age: {man.Age}\n" +
                         $"Wife: {man.Wife?.Name}\n" +
-                        $"Child: {man.Child?.Name}");
-                    man.GetWork();
+                        $"Child: {man.Child?.Name}\n" +
+                        $"Work: {man.job}");
+
                     Console.WriteLine();
                     Console.ReadKey();
                 }
@@ -153,8 +153,9 @@ namespace FamilyTreeCreator_v2
                             $"Name: {woman.Name}\n" +
                             $"Age: {woman.Age}\n" +
                             $"Wife: {woman.Husband?.Name}\n" +
-                            $"Child: {woman.Child?.Name}");
-                    woman.GetWork();
+                            $"Child: {woman.Child?.Name}\n" +
+                            $"Work: {woman.job}");
+
                     Console.WriteLine();
                     Console.ReadKey();
                 }
@@ -177,15 +178,37 @@ namespace FamilyTreeCreator_v2
                 {
                     if (!(per.Child == null))
                     {
-                        Console.ForegroundColor = ConsoleColor.DarkCyan;
-                        Console.WriteLine($"{per.id}. {per}");
-                        Console.ResetColor();
+                        if (per is Man man)
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkCyan;
+                            Console.Write($"{man.id}. {man} ");
+                            Console.ResetColor();
+                            Console.WriteLine($"  {man.Wife?.id} {man.Wife?.Name}");
+                        }
+                        if (per is Woman woman)
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkCyan;
+                            Console.Write($"{woman.id}. {woman} ");
+                            Console.ResetColor();
+                            Console.WriteLine($"  {woman.Husband?.id} {woman.Husband?.Name}");
+                        }
                     }
-                    else
+                    else // for first element
                     {
-                        Console.ForegroundColor = ConsoleColor.DarkCyan;
-                        Console.WriteLine($"{per.id}. {per}");
-                        Console.ResetColor();
+                        if (per is Man man)
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkCyan;
+                            Console.Write($"{man.id}. {man} ");
+                            Console.ResetColor();
+                            Console.WriteLine($"  {man.Wife?.id} {man.Wife?.Name}");
+                        }
+                        if (per is Woman woman)
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkCyan;
+                            Console.Write($"{woman.id}. {woman} ");
+                            Console.ResetColor();
+                            Console.WriteLine($"  {woman.Husband?.id} {woman.Husband?.Name}");
+                        }
 
                         return;
                     }

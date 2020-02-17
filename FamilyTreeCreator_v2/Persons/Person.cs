@@ -8,7 +8,7 @@ namespace FamilyTreeCreator_v2
     {
         public static int sId = 1;
         public int id;
-
+        public int generation = 0;
         public string Name { get; set; }
         public int Age { get; set; }
         
